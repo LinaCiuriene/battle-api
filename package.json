@@ -1,0 +1,31 @@
+{
+  "name": "battle-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js --exec babel-node --presets es2015,stage-2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LinaCiuriene/battle-api.git"
+  },
+  "author": "Lina Čiūrienė",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LinaCiuriene/battle-api/issues"
+  },
+  "homepage": "https://github.com/LinaCiuriene/battle-api#readme",
+  "dependencies": {
+    "dotenv": "^5.0.1",
+    "express": "^4.16.2",
+    "mongoose": "^5.0.7",
+    "nodemon": "^1.17.1"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.26.0"
+  }
+}
