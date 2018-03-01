@@ -1,4 +1,5 @@
 import ImportCtrl from '../controllers/ImportController'
+import BattleCtrl from '../controllers/BattleController'
 
 module.exports = (app) => {
 
@@ -6,9 +7,7 @@ module.exports = (app) => {
 	  res.send('Start')
 	})
 	
-	app.get('/list', (req, res) => {
-	  res.send('list')
-	})
+	app.get('/list', BattleCtrl.getPlacesList)
 	
 	app.get('/count', (req, res)=> {
 	  res.send('count')
