@@ -4,7 +4,7 @@ import fs from 'fs'
 
 exports.importToDatabase = async (req,res) => {
     
-    fs.createReadStream('./battles.csv')
+    await fs.createReadStream('./battles.csv')
     .pipe(csv())
     .on('data', async (data) => {
         
@@ -66,21 +66,22 @@ exports.importToDatabase = async (req,res) => {
         
         try {
             await bat.save()
-            res.send(`Data imported to database '${process.env.DB_NAME}'`)
         }
         catch(e) {
             console.log(e)
         }
     })
     
+    res.send(`Data imported to database '${process.env.DB_NAME}'`)
 }
 
 exports.removeFromDatabase = async (req,res) => {
     try {
         await Battle.remove()
-        res.send(`Data removed from database '${process.env.DB_NAME}'`)
     }
     catch(e) {
-        res.send(e)
+        console.log(e)
     }
+    
+    res.send(`Data removed from database '${process.env.DB_NAME}'`)
 }

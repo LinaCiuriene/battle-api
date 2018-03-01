@@ -1,7 +1,7 @@
 import express from 'express'
-const app = express()
-
 import routes from './routes'
+
+const app = express()
 routes(app)
 
 app.listen(8080, '0.0.0.0', () => {
