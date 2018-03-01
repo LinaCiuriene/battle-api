@@ -1,5 +1,9 @@
 import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+
 const { Schema } = mongoose
+
+dotenv.load()
 
 mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`)
 
@@ -11,6 +15,7 @@ const AttackerSchema = new Schema({
     attackers: [String],
     size: {
         type: Number,
+        default: null,
         validate : {
             validator : Number.isInteger,
             message   : '{VALUE} is not an integer'
@@ -71,17 +76,18 @@ const BattleSchema = new Schema({
     },
     attacker_outcome: {
         type: String,
-        enum: ['win', 'loss']
+        enum: ['win', 'loss', null]
     },
     battle_type: {
         type: String,
-        enum: ['pitched battle', 'ambush', 'siege', 'razing']
+        enum: ['pitched battle', 'ambush', 'siege', 'razing', null]
     },
     major_death: {
         type: Boolean
     },
     major_capture: {
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     summer: {
         type: Boolean
@@ -100,4 +106,4 @@ const BattleSchema = new Schema({
     }
 })
 
-module.exports = BattleSchema
+module.exports = mongoose.model('Battle', BattleSchema);

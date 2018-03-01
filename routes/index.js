@@ -1,9 +1,6 @@
-module.exports = (app) => {
+import ImportCtrl from '../controllers/ImportController'
 
-	app.use('/*', (req, res, next) => {
-		console.log('middleware')
-		next()
-	});
+module.exports = (app) => {
 
 	app.get('/', (req, res) => {
 	  res.send('Start')
@@ -25,8 +22,7 @@ module.exports = (app) => {
 	  res.send('count')
 	})
 	
-	app.get('/import', (req, res) => {
-	  res.send('import')
-	})
+	app.get('/import', ImportCtrl.importToDatabase)
 	
+	app.get('/remove', ImportCtrl.removeFromDatabase)
 }
