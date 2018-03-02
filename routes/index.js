@@ -4,18 +4,14 @@ import BattleCtrl from '../controllers/BattleController'
 module.exports = (app) => {
 
 	app.get('/', (req, res) => {
-	  res.send('Start')
+	  res.send('To test call route \'list\',\'count\', \'stats\' or \'search\'')
 	})
 	
 	app.get('/list', BattleCtrl.getPlacesList)
 	
-	app.get('/count', (req, res)=> {
-	  res.send('count')
-	})
+	app.get('/count', BattleCtrl.getTotalBattlesCount)
 	
-	app.get('/stats', (req, res) => {
-	  res.send('count')
-	})
+	app.get('/stats', BattleCtrl.getStatistics)
 	
 	app.get('/search', (req, res) => {
 	  res.send('count')
