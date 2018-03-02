@@ -61,8 +61,7 @@ const BattleSchema = new Schema({
     },
     battle_number: {
         type: Number,
-        required: true,
-        unique: true,
+        default: 0,
         validate : {
             validator : Number.isInteger,
             message   : '{VALUE} is not an integer'

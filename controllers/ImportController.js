@@ -38,14 +38,14 @@ exports.importToDatabase = async (req,res) => {
             king: data.attacker_king,
             attackers,
             size: data.attacker_size || 0,
-            commander: data.attacker_commander
+            commander: data.attacker_commander.split(',')
         }
         
         const defender = {
             king: data.attacker_king,
             defenders,
             size: data.attacker_size || 0,
-            commander: data.attacker_commander
+            commander: data.attacker_commander.split(',')
         }
         
         const bat = new Battle({
