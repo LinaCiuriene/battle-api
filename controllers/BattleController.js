@@ -28,9 +28,49 @@ exports.getTotalBattlesCount = async (req, res) => {
 
 exports.getStatistics = async (req, res) => {
     
-    /*const most_active = await Battle.aggregate([
-        
-    ]);*/
+    const attacker_king = await Battle.aggregate([
+        {
+            $group: {
+                _id: '$attacker.king',
+                sum:{ $sum: "$battle_number" }
+            }
+        },
+        {$sort:{sum:-1}},
+        {$limit:1}
+    ]);
+    
+    const defender_king = await Battle.aggregate([
+        {
+            $group: {
+                _id: '$defender.king',
+                sum:{ $sum: "$battle_number" }
+            }
+        },
+        {$sort:{sum:-1}},
+        {$limit:1}
+    ]);
+    
+    const region = await Battle.aggregate([
+        {
+            $group: {
+                _id: '$region',
+                sum:{ $sum: "$battle_number" }
+            }
+        },
+        {$sort:{sum:-1}},
+        {$limit:1}
+    ]);
+    
+    const name = await Battle.aggregate([
+        {
+            $group: {
+                _id: '$name',
+                sum:{ $sum: "$battle_number" }
+            }
+        },
+        {$sort:{sum:-1}},
+        {$limit:1}
+    ]);
     
     const attacker_outcome = await Battle.aggregate([{
         $group: {
@@ -52,60 +92,30 @@ exports.getStatistics = async (req, res) => {
             }
         }
     ])
-        
+    
     const result = {
         'most_active': {
-            'attacker_king': '',
-            'defender_king': '',
-            'region': '',
-            'name': ''
+            'attacker_king': attacker_king[0]._id,
+            'defender_king': defender_king[0]._id,
+            'region': region[0]._id,
+            'name': name[0]._id
         },
         'attacker_outcome': {
-            'win': '',// total win
-            'loss': ''// total loss
+            'win': attacker_outcome.filter(o => o._id === 'win')[0].count,
+            'loss': attacker_outcome.filter(o => o._id === 'loss')[0].count
         },
-        'battle_type':[],// unique battle types
+        'battle_type': battle_type,
         'defender_size': {
-            'average': '',
-            'min': '',
-            'max': ''
+            'average': defender_size[0].average,
+            'min': defender_size[0].min,
+            'max': defender_size[0].max
         }
     }
     
     try {
-        res.send([attacker_outcome, battle_type, defender_size])
+        res.send(result)
     }
     catch(e) {
         res.send(`Failed while getting battles statistics: ${e}`)
     }
 }
-
-/*
-{
-    battle_number: 37,
-    major_capture: true,
-    _id: 5a98921dfcfd215bda6ce2dc,
-    name: 'Siege of Raventree',
-    year: 300,
-    attacker: 
-     { attackers: [Array],
-       size: 1500,
-       commander: [Array],
-       _id: 5a98921dfcfd215bda6ce2da,
-       king: 'Joffrey/Tommen Baratheon' },
-    defender: 
-     { defenders: [Array],
-       commander: [Array],
-       _id: 5a98921dfcfd215bda6ce2db,
-       king: 'Joffrey/Tommen Baratheon',
-       size: 1500 },
-    attacker_outcome: 'win',
-    battle_type: 'siege',
-    major_death: false,
-    summer: false,
-    location: 'Raventree',
-    region: 'The Riverlands',
-    note: '',
-    __v: 0
-}
-*/
