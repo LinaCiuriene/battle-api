@@ -74,14 +74,17 @@ exports.getStatistics = async (req, res) => {
     const battle_type = await Battle.find().distinct('battle_type', {'battle_type': {$ne: null}})
     
     // get min, max and average defender size
-    const defender_size = await Battle.aggregate([{
-        $group: {
+    const defender_size = await Battle.aggregate([
+        {$match: {
+            "defender.size": { "$exists": true, "$ne": 0 }
+        }},
+        {$group: {
             _id: null,
             average: { $avg: "$defender.size" },
             max: {$max: "$defender.size"},
             min: {$min: "$defender.size"}
-        }
-    }])
+        }}
+    ])
     
     // format response
     const result = {

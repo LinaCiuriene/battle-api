@@ -14,7 +14,6 @@ const AttackerSchema = new Schema({
     attackers: [String],
     size: {
         type: Number,
-        default: null,
         validate : {
             validator : Number.isInteger,
             message   : '{VALUE} is not an integer'
