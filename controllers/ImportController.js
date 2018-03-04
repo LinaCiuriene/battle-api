@@ -2,6 +2,9 @@ import Battle from '../models/BattleModel'
 import csv from 'csv-parser'
 import fs from 'fs'
 
+/**
+ * import data from csv to database
+ */
 exports.importToDatabase = async (req,res) => {
     
     await fs.createReadStream('./battles.csv')
@@ -42,10 +45,10 @@ exports.importToDatabase = async (req,res) => {
         }
         
         const defender = {
-            king: data.attacker_king,
+            king: data.defender_king,
             defenders,
-            size: data.attacker_size || 0,
-            commander: data.attacker_commander.split(',')
+            size: data.defender_size || 0,
+            commander: data.defender_commander.split(',')
         }
         
         const bat = new Battle({
@@ -75,6 +78,9 @@ exports.importToDatabase = async (req,res) => {
     res.send(`Data imported to database '${process.env.DB_NAME}'`)
 }
 
+/**
+ * remove all documents from database
+ */
 exports.removeFromDatabase = async (req,res) => {
     try {
         await Battle.remove()
