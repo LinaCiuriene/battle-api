@@ -13,9 +13,7 @@ module.exports = (app) => {
 	
 	app.get('/stats', BattleCtrl.getStatistics)
 	
-	app.get('/search', (req, res) => {
-	  res.send('count')
-	})
+	app.get('/search', BattleCtrl.getFilteredDocuments)
 	
 	app.get('/import', ImportCtrl.importToDatabase)
 	
