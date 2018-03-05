@@ -34,3 +34,7 @@ Also there are routes to import data from csv to databases and remove all import
 
     - Import data from csv file: `http://<YOUR_HOST>:<YOUR_PORT>/import`
     - Remove all data from database: `http://<YOUR_HOST>:<YOUR_PORT>/remove`
+    
+## Run application
+
+In root directory run `npm start`
